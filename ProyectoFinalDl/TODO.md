@@ -11,13 +11,23 @@ Convención: `[ ]` pendiente · `[x]` hecho. Vamos tachando a medida que avanzam
 
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 0.1 | Elegir el **tipo de problema** (clasificación de imágenes, NLP, audio, tabular, etc.) | [ ] | Debe ser viable en Colab (GPU T4, ~limitada en tiempo/VRAM) |
-| 0.2 | Definir el **dataset** (origen, tamaño, nº de clases) | [ ] | Preferir uno descargable por código (HuggingFace / torchvision / Kaggle API) |
-| 0.3 | Elegir la **arquitectura del modelo** | [ ] | Si es de la literatura: guardar la referencia y anotar qué modificaremos |
-| 0.4 | Redactar **título del proyecto** | [ ] | Entregable preliminar |
-| 0.5 | Redactar **objetivo general** (preciso y medible) | [ ] | Entregable preliminar |
-| 0.6 | Redactar **2-3 objetivos específicos** (alineados con la metodología) | [ ] | Entregable preliminar |
+| 0.1 | Elegir el **tipo de problema** | [x] | Clasificación de imágenes de comida (visión por computador) |
+| 0.2 | Definir el **dataset** (origen, tamaño, nº de clases) | [x] | **Food-101** (subconjunto de **34 clases** de comidas populares). Fuente nutricional: **USDA FoodData Central** |
+| 0.3 | Elegir la **arquitectura del modelo** | [x] | CNN preentrenada con *transfer learning* (candidatas: ResNet50 / EfficientNet). Decidir cuál al implementar |
+| 0.4 | Redactar **título del proyecto** | [x] | Ver `EntregaPreliminar.md` |
+| 0.5 | Redactar **objetivo general** (preciso y medible) | [x] | Ver `EntregaPreliminar.md` |
+| 0.6 | Redactar **2-3 objetivos específicos** (alineados con la metodología) | [x] | 3 objetivos, en `EntregaPreliminar.md` |
 | 0.7 | Verificar factibilidad en Colab (tamaño del dataset vs tiempo de sesión / VRAM) | [ ] | Tener plan B de submuestreo si hace falta |
+
+### Definición del proyecto (decidido)
+
+**Concepto:** el usuario toma una foto de un plato; una red neuronal (transfer learning sobre Food-101) **clasifica el plato** y, a partir de esa clase, se muestra su **información nutricional** (calorías y macros) consultada en una tabla objetiva basada en **USDA FoodData Central**.
+
+> Importante: la red **solo clasifica la imagen**; los macros NO los predice la red, vienen de una base de datos nutricional reconocida. Esto mantiene el criterio nutricional objetivo y defendible (no subjetivo como "saludable/no saludable").
+
+**Las 34 clases seleccionadas** (comidas populares, con contraste nutricional):
+
+1. hamburger · 2. pizza · 3. hot_dog · 4. french_fries · 5. club_sandwich · 6. grilled_cheese_sandwich · 7. nachos · 8. onion_rings · 9. steak · 10. fried_rice · 11. spaghetti_bolognese · 12. spaghetti_carbonara · 13. lasagna · 14. grilled_salmon · 15. tacos · 16. sushi · 17. ramen · 18. pad_thai · 19. dumplings · 20. chicken_curry · 21. chicken_wings · 22. pancakes · 23. waffles · 24. french_toast · 25. omelette · 26. caesar_salad · 27. greek_salad · 28. guacamole · 29. ice_cream · 30. donuts · 31. cheesecake · 32. hot_and_sour_soup · 33. miso_soup · 34. french_onion_soup
 
 ---
 
