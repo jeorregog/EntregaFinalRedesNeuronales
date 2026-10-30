@@ -44,8 +44,10 @@ Food-101 **no requiere Kaggle ni descarga manual**. Se trae directo al notebook 
 
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 1.1 | Consolidar título + objetivo general + objetivos específicos | [x] | Listo en `EntregaPreliminar.md` (texto plano para copiar-pegar) |
-| 1.2 | Enviar por el medio indicado (buzón / correo del profesor) | [ ] | **Fecha límite: viernes 30 oct 2026**. Antes: preguntar formato al profe |
+| 1.1 | Consolidar título + objetivo general + objetivos específicos | [x] | Publicados en el `README.md` (portada del repo) |
+| 1.2 | Publicar en el **README del repo** (portada de GitHub) | [x] | Título + objetivos ya están en `README.md`. Lineamientos del profe movidos a `LINEAMIENTOS.md` |
+| 1.3 | Hacer push del README al repositorio de GitHub | [ ] | Para que se vea en la portada |
+| 1.4 | Confirmar con el profe si además hay que avisar por otro medio (buzón/correo) | [ ] | **Fecha límite: viernes 30 oct 2026** |
 
 ---
 
