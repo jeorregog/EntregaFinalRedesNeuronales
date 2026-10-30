@@ -17,7 +17,16 @@ Convención: `[ ]` pendiente · `[x]` hecho. Vamos tachando a medida que avanzam
 | 0.4 | Redactar **título del proyecto** | [x] | Ver `EntregaPreliminar.md` |
 | 0.5 | Redactar **objetivo general** (preciso y medible) | [x] | Ver `EntregaPreliminar.md` |
 | 0.6 | Redactar **2-3 objetivos específicos** (alineados con la metodología) | [x] | 3 objetivos, en `EntregaPreliminar.md` |
-| 0.7 | Verificar factibilidad en Colab (tamaño del dataset vs tiempo de sesión / VRAM) | [ ] | Tener plan B de submuestreo si hace falta |
+| 0.7 | Verificar factibilidad en Colab (tamaño del dataset vs tiempo de sesión / VRAM) | [ ] | Tener plan B de submuestreo si hace falta. Food-101 ≈ 5 GB (101k imágenes); con 34 clases ≈ 34k imágenes |
+
+### Nota sobre la descarga del dataset en Colab (importante)
+
+Food-101 **no requiere Kaggle ni descarga manual**. Se trae directo al notebook por código:
+- **Opción A (torchvision):** `torchvision.datasets.Food101(root=..., split="train"/"test", download=True)` — descarga y descomprime solo. Trae un split train/test oficial.
+- **Opción B (HuggingFace):** `load_dataset("food101")` — también descarga directo al entorno.
+- Luego se **filtran las 34 clases** elegidas (el dataset trae las 101).
+- Los datos viven en el disco temporal de la sesión de Colab (se borran al cerrar). Si molesta re-descargar, se puede montar Google Drive y cachear ahí.
+- Evitamos la API de Kaggle (sin tokens ni `kaggle.json`).
 
 ### Definición del proyecto (decidido)
 
