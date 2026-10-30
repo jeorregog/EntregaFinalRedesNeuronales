@@ -4,8 +4,6 @@ Proyecto final del curso de Deep Learning (Redes Neuronales y Aprendizaje Profun
 
 Clasificación de imágenes de comida mediante redes neuronales convolucionales y *transfer learning*: a partir de la fotografía de un plato, el modelo identifica de qué comida se trata y, con esa predicción, se consulta su información nutricional de referencia (calorías y macronutrientes).
 
-> El documento con los lineamientos del curso está en [`LINEAMIENTOS.md`](LINEAMIENTOS.md).
-
 ---
 
 ## Objetivo general
