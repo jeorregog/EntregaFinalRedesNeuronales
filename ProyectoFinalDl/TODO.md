@@ -35,8 +35,8 @@ Convención: `[ ]` pendiente · `[x]` hecho. Vamos tachando a medida que avanzam
 
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 1.1 | Consolidar título + objetivo general + objetivos específicos | [ ] | Depende de 0.4-0.6 |
-| 1.2 | Enviar por el medio indicado (buzón / correo del profesor) | [ ] | **Fecha límite: viernes 30 oct 2026** |
+| 1.1 | Consolidar título + objetivo general + objetivos específicos | [x] | Listo en `EntregaPreliminar.md` (texto plano para copiar-pegar) |
+| 1.2 | Enviar por el medio indicado (buzón / correo del profesor) | [ ] | **Fecha límite: viernes 30 oct 2026**. Antes: preguntar formato al profe |
 
 ---
 
