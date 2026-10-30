@@ -1,8 +1,3 @@
-# TODO — Proyecto Final Deep Learning
-
-Checklist de todo lo que hay que hacer para el proyecto final, derivado de `README.md` y `00. Projects.pdf`.
-Pensado para ejecutarse en **Google Colab** (no en máquina local). Proyecto, dataset y modelo **por definir** (abierto).
-
 Convención: `[ ]` pendiente · `[x]` hecho. Vamos tachando a medida que avanzamos.
 
 ---
