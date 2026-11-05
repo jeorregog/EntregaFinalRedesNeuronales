@@ -1,0 +1,15 @@
+# Claves y secretos (NO subir a GitHub)
+key.md
+*.key
+*_secret*
+.env
+
+# Artefactos de Python / notebooks
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Modelos y datos pesados
+*.pt
+*.pth
+_usda_cache.json

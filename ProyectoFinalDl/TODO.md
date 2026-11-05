@@ -12,16 +12,17 @@ Convención: `[ ]` pendiente · `[x]` hecho. Vamos tachando a medida que avanzam
 | 0.4 | Redactar **título del proyecto** | [x] | Ver `EntregaPreliminar.md` |
 | 0.5 | Redactar **objetivo general** (preciso y medible) | [x] | Ver `EntregaPreliminar.md` |
 | 0.6 | Redactar **2-3 objetivos específicos** (alineados con la metodología) | [x] | 3 objetivos, en `EntregaPreliminar.md` |
-| 0.7 | Verificar factibilidad en Colab (tamaño del dataset vs tiempo de sesión / VRAM) | [ ] | Tener plan B de submuestreo si hace falta. Food-101 ≈ 5 GB (101k imágenes); con 34 clases ≈ 34k imágenes |
+| 0.7 | Verificar factibilidad en Kaggle (tamaño del dataset vs tiempo de sesión / VRAM) | [ ] | Tener plan B de submuestreo si hace falta. Food-101 ≈ 5 GB (101k imágenes); con 34 clases ≈ 34k imágenes |
 
-### Nota sobre la descarga del dataset en Colab (importante)
+### Nota sobre el entorno y la descarga del dataset (importante)
 
-Food-101 **no requiere Kaggle ni descarga manual**. Se trae directo al notebook por código:
-- **Opción A (torchvision):** `torchvision.datasets.Food101(root=..., split="train"/"test", download=True)` — descarga y descomprime solo. Trae un split train/test oficial.
-- **Opción B (HuggingFace):** `load_dataset("food101")` — también descarga directo al entorno.
+**Entorno definitivo: Kaggle Notebooks** (GPU T4/P100, ~30 h/semana).
+
+Food-101 ya existe como dataset público en Kaggle, así que **no hay que descargarlo por internet**:
+- En el notebook de Kaggle: **Add Input → buscar "Food 101"** y añadir el dataset. Queda montado en `/kaggle/input/...` (solo lectura), sin re-descargas entre sesiones.
+- Alternativa si no se usa el dataset de Kaggle: `torchvision.datasets.Food101(..., download=True)` o `load_dataset("food101")`, pero implica descargar ~5 GB cada sesión.
 - Luego se **filtran las 34 clases** elegidas (el dataset trae las 101).
-- Los datos viven en el disco temporal de la sesión de Colab (se borran al cerrar). Si molesta re-descargar, se puede montar Google Drive y cachear ahí.
-- Evitamos la API de Kaggle (sin tokens ni `kaggle.json`).
+- Las fotos externas para la prueba de generalización se suben como un dataset propio de Kaggle o con *Upload*.
 
 ### Definición del proyecto (decidido)
 
@@ -41,12 +42,12 @@ Food-101 **no requiere Kaggle ni descarga manual**. Se trae directo al notebook 
 |---|-------|:------:|-------|
 | 1.1 | Consolidar título + objetivo general + objetivos específicos | [x] | Publicados en el `README.md` (portada del repo) |
 | 1.2 | Publicar en el **README del repo** (portada de GitHub) | [x] | Título + objetivos ya están en `README.md`. Lineamientos del profe movidos a `LINEAMIENTOS.md` |
-| 1.3 | Hacer push del README al repositorio de GitHub | [ ] | Para que se vea en la portada |
-| 1.4 | Confirmar con el profe si además hay que avisar por otro medio (buzón/correo) | [ ] | **Fecha límite: viernes 30 oct 2026** |
+| 1.3 | Hacer push del README al repositorio de GitHub | [x] | Ya subido a origin/main (repo jeorregog/EntregaFinalRedesNeuronales) |
+| 1.4 | Confirmar con el profe si además hay que avisar por otro medio (buzón/correo) | [x] | Confirmado con el profe |
 
 ---
 
-## Fase 2 — Desarrollo técnico en Colab (el notebook)
+## Fase 2 — Desarrollo técnico en Kaggle (el notebook)
 
 ### 2.1 Problema y justificación
 | # | Tarea | Estado | Notas |
@@ -54,48 +55,50 @@ Food-101 **no requiere Kaggle ni descarga manual**. Se trae directo al notebook 
 | 2.1.1 | Escribir descripción clara del problema | [ ] | |
 | 2.1.2 | Escribir contexto y relevancia (¿por qué importa?) | [ ] | |
 
+> **Notebook corrido en Kaggle (Tesla T4):** `proyecto-food101Corrido.ipynb`. Resultados reales: **test accuracy 88.0% · F1 macro 88.0%**, entrenamiento 33.6 min, 8 épocas, 0 errores, 4 gráficas. Lo que falta abajo es sobre todo **redacción/análisis**, no código.
+
 ### 2.2 Datos
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 2.2.1 | Cargar el dataset en Colab (por código, reproducible) | [ ] | |
-| 2.2.2 | Describir dataset: tamaño, clases, distribución | [ ] | Con gráficas de distribución |
-| 2.2.3 | División train / validación / test | [ ] | Justificar proporciones |
-| 2.2.4 | Preprocesamiento (normalización, resize, tokenización, etc.) | [ ] | Según el tipo de dato |
-| 2.2.5 | Data augmentation (si aplica) | [ ] | Justificar cada técnica |
-| 2.2.6 | Justificar cada decisión de preprocesamiento | [ ] | No basta aplicarlas |
+| 2.2.1 | Cargar el dataset en Kaggle (Add Input → Food 101, montado en `/kaggle/input/`) | [x] | `kmader/food41` (K Scott Mader), 34.000 imágenes, 34 clases presentes |
+| 2.2.2 | Describir dataset: tamaño, clases, distribución | [x] | Hecho en el notebook (gráfica de distribución + ejemplos). Falta redactarlo para el informe |
+| 2.2.3 | División train / validación / test | [x] | 23.800 / 5.100 / 5.100, estratificado 70/15/15 |
+| 2.2.4 | Preprocesamiento (resize, normalización ImageNet) | [x] | En el notebook, justificado |
+| 2.2.5 | Data augmentation | [x] | Flip, rotación, color jitter (solo en train), justificado |
+| 2.2.6 | Justificar cada decisión de preprocesamiento | [x] | En markdown del notebook |
 
 ### 2.3 Modelo
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 2.3.1 | Implementar la arquitectura elegida | [ ] | |
-| 2.3.2 | Documentar la referencia (si es de la literatura) | [ ] | |
-| 2.3.3 | Describir las modificaciones hechas al modelo original | [ ] | |
-| 2.3.4 | Justificar por qué la arquitectura es apropiada | [ ] | Demostrar que entendemos cómo funciona |
+| 2.3.1 | Implementar la arquitectura elegida | [x] | EfficientNet-B0 (~4.05M params), cabeza 1280→34 |
+| 2.3.2 | Documentar la referencia (si es de la literatura) | [x] | Cita de EfficientNet (Tan & Le, 2019, ICML) en la sección 7 del notebook |
+| 2.3.3 | Describir las modificaciones hechas al modelo original | [x] | Reemplazo del clasificador final por 34 clases |
+| 2.3.4 | Justificar por qué la arquitectura es apropiada | [x] | En markdown (balance precisión/coste); ampliar en sustentación |
 
 ### 2.4 Entrenamiento y configuración experimental
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 2.4.1 | Definir función de pérdida, optimizador y estrategia | [ ] | Justificar |
-| 2.4.2 | Definir y justificar hiperparámetros | [ ] | |
-| 2.4.3 | Entrenar y registrar **curvas de aprendizaje** (loss y métricas, train y validación) | [ ] | Guardar las gráficas |
-| 2.4.4 | Analizar comportamiento: sobreajuste / subajuste / convergencia | [ ] | Interpretación crítica, no solo mostrar la gráfica |
-| 2.4.5 | Registrar recursos computacionales (CPU/GPU/RAM) y tiempo de entrenamiento | [ ] | En Colab: anotar tipo de GPU (T4/otra) |
+| 2.4.1 | Definir función de pérdida, optimizador y estrategia | [x] | CrossEntropy, AdamW (lr backbone/cabeza), Cosine scheduler, AMP |
+| 2.4.2 | Definir y justificar hiperparámetros | [x] | 8 épocas, batch 64, lr 1e-3/1e-4; justificar en informe |
+| 2.4.3 | Entrenar y registrar **curvas de aprendizaje** | [x] | Curvas loss/acc/F1 guardadas |
+| 2.4.4 | Analizar comportamiento: sobreajuste / subajuste / convergencia | [x] | Redactado en `corrido3.ipynb` (sobreajuste leve desde época 5) |
+| 2.4.5 | Registrar recursos computacionales y tiempo | [x] | Tesla T4, 33.6 min |
 
 ### 2.5 Resultados y evaluación
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 2.5.1 | Elegir y calcular métricas (accuracy, F1, etc.) | [ ] | Acordes al problema |
-| 2.5.2 | Presentar resultados cuantitativos + visualizaciones | [ ] | p.ej. matriz de confusión |
-| 2.5.3 | **Evaluación en datos externos / no vistos** (generalización) | [ ] | Requisito explícito del PDF |
-| 2.5.4 | Analizar si el rendimiento se mantiene o se degrada y por qué | [ ] | |
-| 2.5.5 | Identificar fortalezas, limitaciones y fallas del modelo | [ ] | |
-| 2.5.6 | Responder: ¿los resultados resuelven el problema planteado? | [ ] | |
+| 2.5.1 | Elegir y calcular métricas (accuracy, F1, etc.) | [x] | Test acc 88.0%, F1 macro 88.0% |
+| 2.5.2 | Presentar resultados cuantitativos + visualizaciones | [x] | classification_report + matriz de confusión |
+| 2.5.3 | **Evaluación en datos externos / no vistos** (generalización) | [x] | 5 fotos externas en `corrido3.ipynb`: 3/5 aciertos (pizza, hamburguesa, onion_rings) |
+| 2.5.4 | Analizar si el rendimiento se mantiene o se degrada y por qué | [x] | Redactado: 88%→60%, brecha de dominio |
+| 2.5.5 | Identificar fortalezas, limitaciones y fallas del modelo | [x] | Redactado en análisis de resultados y conclusiones |
+| 2.5.6 | Responder: ¿los resultados resuelven el problema planteado? | [x] | En conclusiones |
 
 ### 2.6 Conclusiones
 | # | Tarea | Estado | Notas |
 |---|-------|:------:|-------|
-| 2.6.1 | Conclusiones ligadas a los objetivos y respaldadas por evidencia | [ ] | Evitar afirmaciones genéricas |
-| 2.6.2 | Limitaciones y oportunidades de mejora | [ ] | |
+| 2.6.1 | Conclusiones ligadas a los objetivos y respaldadas por evidencia | [x] | Sección 13 de `corrido3.ipynb` |
+| 2.6.2 | Limitaciones y oportunidades de mejora | [x] | En conclusiones |
 
 ---
 
@@ -135,7 +138,7 @@ Food-101 **no requiere Kaggle ni descarga manual**. Se trae directo al notebook 
 
 ## Notas y restricciones clave
 
-- **Entorno:** todo el desarrollo corre en **Google Colab** (GPU T4 gratis, con límites de tiempo de sesión y VRAM). Elegir dataset/modelo que quepan en ese presupuesto.
+- **Entorno:** todo el desarrollo corre en **Kaggle Notebooks** (GPU T4/P100, ~30 h/semana). Food-101 se añade como dataset de Kaggle (sin re-descargas). Elegir modelo que quepa en ese presupuesto.
 - **Fechas:**
   - Entrega preliminar (título + objetivos): **viernes 30 oct 2026**.
   - Presentación + informe final: **miércoles 11 nov 2026**.
