@@ -58,6 +58,11 @@ Explicación en lenguaje natural de cada celda de código de `ProyectoFood.ipynb
 **Qué hace:** grafica loss, accuracy y F1 de train y validación a lo largo de las épocas.
 **Cómo decirlo:** "Estas curvas muestran cómo aprende el modelo. Se ve que converge y que desde la época 5 hay un sobreajuste leve: el train sigue mejorando pero la validación se estanca."
 
+### Celda de texto — Análisis del entrenamiento (markdown, va justo después de las curvas)
+**Qué hace:** no es código; es la interpretación escrita de las curvas. Resume que el F1 de validación sube de 0,818 a 0,882 y se estabiliza (convergencia); que desde la época 5 hay sobreajuste leve (F1 de train 0,916→0,942 vs. validación estancada en ~0,88, y la *val loss* deja de bajar); que no hay subajuste; y que el augmentation y el weight decay contienen el sobreajuste, por lo que parar en 8 épocas y quedarse con el mejor modelo por F1 de validación es razonable.
+**Cómo decirlo:** "Aquí no solo muestro la gráfica, la interpreto: el modelo converge, la validación se estabiliza en 0,88 y desde la época 5 hay un sobreajuste leve y esperable en fine-tuning. Lo contengo con data augmentation y weight decay, y por eso corto en 8 épocas y me quedo con el mejor modelo según validación, no con el de la última época."
+**Por qué importa:** el profe dijo que "presentar una gráfica no equivale a analizarla"; esta celda es justo el análisis que valora.
+
 ### Celda 14 — Evaluación en test
 **Qué hace:** carga el mejor modelo guardado y lo evalúa sobre el conjunto de test; imprime accuracy, F1 y el reporte por clase.
 **Cómo decirlo:** "Cargo el mejor modelo y lo evalúo en el test, que son imágenes que nunca vio. Da 88% de accuracy y 0,88 de F1 macro."
@@ -65,6 +70,11 @@ Explicación en lenguaje natural de cada celda de código de `ProyectoFood.ipynb
 ### Celda 15 — Matriz de confusión
 **Qué hace:** calcula y grafica la matriz de confusión normalizada.
 **Cómo decirlo:** "La matriz muestra con qué se confunde cada clase. La diagonal fuerte indica buenos aciertos; los errores se concentran entre platos parecidos, como pastas al horno o platos de huevo."
+
+### Celda de texto — Análisis de resultados en test (markdown, va justo después de la matriz)
+**Qué hace:** no es código; es la interpretación escrita de las métricas. Explica que accuracy y F1 macro coinciden (88,0% / 0,880) porque el test está balanceado (150 imágenes por clase); lista las mejores clases (onion_rings 0,946, miso_soup 0,934, spaghetti_carbonara 0,932, dumplings 0,924, pizza/french_fries 0,918), que son platos visualmente distintivos; y las peores (omelette 0,782, lasagna 0,797, french_toast 0,806, chicken_curry 0,813, grilled_cheese_sandwich 0,820), cuyas confusiones tienen sentido visual (lasaña↔pastas al horno, omelette↔platos de huevo, french toast↔pancakes/waffles).
+**Cómo decirlo:** "Interpreto el reporte y la matriz: el modelo acierta en platos con forma, color o textura muy característicos, y falla justo en comidas que se parecen entre sí. Los errores no son dispersos, se concentran entre clases visualmente cercanas, lo que confirma que el modelo aprendió rasgos visuales coherentes."
+**Por qué importa:** vuelve a ser análisis crítico, no solo mostrar la figura; conecta los errores con una explicación visual.
 
 ### Celda 16 — Tabla nutricional (USDA)
 **Qué hace:** define el diccionario con los macros por 100 g de cada clase, obtenidos de la API de USDA y cacheados.
